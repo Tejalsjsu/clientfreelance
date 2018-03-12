@@ -1,0 +1,34 @@
+var React = require('react');
+var Link = require('react-router-dom').Link;
+var NavLink = require('react-router-dom').NavLink;
+var Button = require('react-bootstrap').Button;
+let btnStyle = { marginTop: '8px', marginRight: '4px'}
+
+
+function Nav(){
+    return(
+        <div className="container">
+        <nav className="navbar1">
+            <div className="container-fluid">
+                <div className="navbar-header"> </div>
+        <ul className="nav navbar-nav">
+            <li> <NavLink exact activeClassName='active' to='/Home'> Home </NavLink> </li>
+            <li> <NavLink exact activeClassName='active' to='/login'> Hire Freelancer </NavLink> </li>
+            <li> <NavLink activeClassName='active' to='/postproject'> Find Work </NavLink> </li>
+        </ul>
+            <ul className="nav navbar-nav navbar-right">
+                <li><NavLink to="/signup"> <span className="glyphicon glyphicon-user"> </span> Sign Up</NavLink></li>
+                <li><NavLink to="/login"> <span className="glyphicon glyphicon-log-in"></span> Login </NavLink></li>
+                <li> <div><Button bsStyle="warning" style={btnStyle} href='/postproject'
+
+                > Post a Project </Button> </div> </li>
+
+            </ul>
+            </div>
+        </nav>
+        </div>
+
+    )
+}
+
+module.exports = Nav;

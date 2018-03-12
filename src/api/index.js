@@ -13,7 +13,7 @@ const headers = {
 //                 const data = res.data.food.map(food => {
 //                     return food
 //                 });
-//                 dispatch(Load(data))
+//                 dispatch((data))
 //             });
 //     }
 // }
@@ -28,7 +28,11 @@ export const doLogin = (payload) =>
         },
         body: JSON.stringify(payload)
     }).then((res) => res.json())
-        .then((data) => {return data;})
+        .then((data) => {
+            const token = data.token;
+            localStorage.setItem('jwtToken', token);
+            console.log(token);
+            return data;})
         .catch(error => {
             console.log("This is error");
             return error;
@@ -73,3 +77,16 @@ export const fetchData = (payload) =>
         return error;
     });
 
+ export const checkSession = () =>
+     fetch(`${api}/users/redirectToHomepage`,{
+         method: 'GET',
+         headers:{
+             ...headers,
+             'Content-Type': 'application/json'
+         },
+         }).then(res=> {
+         return res;
+     }).catch(error=> {
+         console.log("This is error");
+         return error;
+     });

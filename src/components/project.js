@@ -11,10 +11,9 @@ let divStyle2 = {height:'45px'};
 let divStyle3 ={backgroundColor:'#E3E1E1'};
 let divStyle1 = {align: 'center', backgroundColor: '#FEFDFD', padding: '28px', marginTop: '1px'};
 
-class Login extends Component{
+class Project extends Component{
     constructor(props){
         super(props);
-        console.log("On con");
     }
 
 
@@ -35,11 +34,6 @@ class Login extends Component{
             password: '',
             email:''
         });
-        console.log("On will");
-    }
-
-    componenetDidMount(){
-        console.log("On did n");
     }
     //
     // setLink = () => {
@@ -72,18 +66,18 @@ class Login extends Component{
     render(){
         return(
             <div style={divStyle3}>
-                <Route exact path="/login" render={() =>(
+                <Route exact path="/project" render={() =>(
                     <div>
                         <div className="col-sm-4" style={divStyle2}> </div>
 
                         <div style={divStyle1} className="col-sm-3">
-                {/*<div>*/}
-                        {/*<div>*/}
+                            {/*<div>*/}
+                            {/*<div>*/}
 
                             <img src={logo} style={imgStyle} alt="logo"/>
                             <hr color="#E3E1E1"/>
                             <input type="text" className="form-control" placeholder="Enter User Name" value={this.state.userdata.username}
-                                   
+
                                    onChange={(event) => {
                                        this.setState({
                                            userdata: {
@@ -102,7 +96,7 @@ class Login extends Component{
                                        });
                                    }}/><br/>
                             <Button bsStyle="success" bsSize="sm" block
-                                onClick={() => this.handleSubmit()}> Login </Button>
+                                    onClick={() => this.handleSubmit()}> Login </Button>
 
                             <hr color="#E3E1E1"/>
 
@@ -139,4 +133,4 @@ class Login extends Component{
     }
 }
 
-export default withRouter(Login);
+export default withRouter(Project);

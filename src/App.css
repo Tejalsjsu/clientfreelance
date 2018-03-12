@@ -29,3 +29,27 @@
 
 
 /*this is new*/
+
+.nav{
+  display: flex;
+}
+
+.active{
+  font-weight: bold;
+}
+
+/* carousel styling*/
+.carousel-inner img {
+  width: 100%;
+  margin: auto;
+}
+
+.carousel-caption h3 {
+  color: #fff !important;
+}
+
+.footer {
+  background-color: #555;
+  color: white;
+  padding: 15px;
+}
