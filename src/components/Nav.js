@@ -5,6 +5,7 @@ var Button = require('react-bootstrap').Button;
 let btnStyle = { marginTop: '8px', marginRight: '4px'}
 
 
+
 function Nav(){
     return(
         <div className="container">
@@ -13,15 +14,15 @@ function Nav(){
                 <div className="navbar-header"> </div>
         <ul className="nav navbar-nav">
             <li> <NavLink exact activeClassName='active' to='/Home'> Home </NavLink> </li>
-            <li> <NavLink exact activeClassName='active' to='/login'> Hire Freelancer </NavLink> </li>
-            <li> <NavLink activeClassName='active' to='/postproject'> Find Work </NavLink> </li>
+            <li> <NavLink exact activeClassName='active' to='/login'> Get Connected </NavLink> </li>
+            <li> <NavLink activeClassName='active' to='/postproject'> How we work </NavLink> </li>
         </ul>
             <ul className="nav navbar-nav navbar-right">
                 <li><NavLink to="/signup"> <span className="glyphicon glyphicon-user"> </span> Sign Up</NavLink></li>
-                <li><NavLink to="/login"> <span className="glyphicon glyphicon-log-in"></span> Login </NavLink></li>
-                <li> <div><Button bsStyle="warning" style={btnStyle} href='/postproject'
+                      <li>
+                    <div><Button bsStyle="warning" style={btnStyle} href='/postproject'
 
-                > Post a Project </Button> </div> </li>
+                > Post a Query </Button> </div> </li>
 
             </ul>
             </div>

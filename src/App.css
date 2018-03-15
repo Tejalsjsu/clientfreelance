@@ -53,3 +53,31 @@
   color: white;
   padding: 15px;
 }
+
+.font-grey{
+  color: #919292;
+  font-size: 17px;
+}
+
+.text-left {
+  text-align: left;
+}
+
+input-file{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  width: 100%;
+  border: solid transparent;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.underline{
+  text-underline-mode: true;
+  text-underline: blue;
+  text-underline-style: dash;
+  text-decoration: underline;
+}

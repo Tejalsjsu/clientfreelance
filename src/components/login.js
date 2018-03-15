@@ -6,6 +6,7 @@ import  logo from '../image/fl-logo.png';
 import * as API from '../api/index';
 import Dashboard from './dashboard';
 import Signup from './signup';
+import cookie from 'react-cookies';
 let imgStyle = {height: '70px', padding: '10px'};
 let divStyle2 = {height:'45px'};
 let divStyle3 ={backgroundColor:'#E3E1E1'};
@@ -14,7 +15,6 @@ let divStyle1 = {align: 'center', backgroundColor: '#FEFDFD', padding: '28px', m
 class Login extends Component{
     constructor(props){
         super(props);
-        console.log("On con");
     }
 
 
@@ -22,29 +22,24 @@ class Login extends Component{
         userdata: {
             username: '',
             password: '',
-            email: ''
+            email: '',
+            token:'',
+            userId:''
         },
         isLoggedIn: false,
         message: ''
     };
 
-
     componentWillMount(){
+        cookie.remove('userId', { path: '/' });
         this.setState({
             username: '',
             password: '',
-            email:''
+            email:'',
+            token:'',
+            userId:''
         });
-        console.log("On will");
     }
-
-    componenetDidMount(){
-        console.log("On did n");
-    }
-    //
-    // setLink = () => {
-    //     this.props.history.push('\dashboard');
-    // }
 
     handleSubmit = () => {
         API.doLogin(this.state.userdata)
@@ -55,11 +50,11 @@ class Login extends Component{
                         isLoggedIn: true,
                         message: "Welcome to my App..!!",
                         email: res.email,
-                        username: this.state.userdata.name
+                        username: this.state.userdata.name,
+                        token: res.token,
                     });
-                    //this.context.router.history.push("/dashboard");
+                    cookie.save('userId', this.state.token, { path: '/' });
                     this.props.history.push("/dashboard");
-                    //  history.push('/dashboard');
                 } else if (res.status === '401') {
                     this.setState({
                         isLoggedIn: false,
