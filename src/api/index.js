@@ -2,7 +2,8 @@
 const api = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001'
 
 const headers = {
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+
 };
 
 // export default function fetchMenu() {
@@ -26,6 +27,7 @@ export const doLogin = (payload) =>
             ...headers,
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(payload)
     }).then((res) => res.json())
         .then((data) => {
@@ -53,6 +55,7 @@ export const saveData = (details) =>
             ...headers,
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(details)
     }).then((res) => res.json())
         .then((data) => {return data;})
@@ -70,6 +73,7 @@ export const logout = (payload) =>
             ...headers,
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(payload)
     }).then((res) => res.json())
         .then((data) => {
@@ -86,6 +90,7 @@ export const fetchData = (payload) =>
             ...headers,
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(payload)
     }).then(res => {
         return res;
@@ -101,6 +106,7 @@ export const fetchData = (payload) =>
              ...headers,
              'Content-Type': 'application/json'
          },
+         credentials: 'include',
          })
          .then((res) => res.json())
     .then((data) => {
@@ -110,3 +116,75 @@ export const fetchData = (payload) =>
         return error;
     });
 
+
+export const postProject = (projectdetails) =>
+    fetch(`${api}/users/postProject`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(projectdetails)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+
+
+export const fetchProjects = () =>
+    fetch(`${api}/users/getProjects`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    }).then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in fetch projects");
+            return error;
+        });
+
+
+export const editUpdateProfile = (userdata) =>
+    fetch(`${api}/users/editUpdateProfile`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(userdata)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error while updating profile");
+            return error;
+        });
+
+
+export const fetchUserProfile = () =>
+    fetch(`${api}/users/getUserProfile`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    }).then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in fetch user Profile");
+            return error;
+        });
