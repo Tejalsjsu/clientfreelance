@@ -5,7 +5,7 @@ import * as API from "../api";
 import cookie from 'react-cookies';
 import NavBar from '../components/navbar';
 import Post from '../components/postproject';
-import Project from './project'
+import Project from './projectdetails'
 import {Button} from 'react-bootstrap'
 import {logout} from "../api";
 
@@ -23,29 +23,28 @@ class Dashboard extends Component {
     };
 
     componentWillMount(){
-        API.checkSession()
-        .then((res) => {
-                console.log("status " +res.status);
-                console.log(cookie.load('userId'));
-                if (res.status === '201') {
-                    this.setState({
-                        isLoggedIn: true,
-                    });
-                    this.props.history.push('/dashboard');
-                } else if (res.status === '401') {
-                    this.setState({
-                        isLoggedIn: false,
-                        message: "Signup. Try again..!!",
-                    });
-
-                }
-            });
-
-         if(cookie.load('userId') != undefined){
-             console.log("logged in");
-         }else{
-             console.log("in else "+cookie.load('userId'));
-         }
+        if(cookie.load('userId') == undefined){
+            console.log("logged in");
+            this.props.history.push('/dashboard');
+        }else{
+            console.log("in else "+cookie.load('userId'));
+            API.checkSession()
+                .then((res) => {
+                    console.log("status " +res.status);
+                    if (res.status === '201') {
+                        this.setState({
+                            isLoggedIn: true,
+                        });
+                        this.props.history.push('/dashboard');
+                    } else if (res.status === '401') {
+                        this.setState({
+                            isLoggedIn: false,
+                            message: "Signup. Try again..!!",
+                        });
+                        this.props.history.push('/login');
+                    }
+                });
+        }
         this.setState({
             username : this.props.username,
             email : this.props.email,

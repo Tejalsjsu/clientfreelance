@@ -31,7 +31,6 @@ class Login extends Component{
     };
 
     componentWillMount(){
-        cookie.remove('userId', { path: '/' });
         this.setState({
             username: '',
             password: '',

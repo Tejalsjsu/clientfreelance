@@ -21,10 +21,10 @@ function NavBar() {
                         </div>
                         <div className="collapse navbar-collapse" id="myNavbar">
                             <ul className="nav navbar-nav">
-                                <li className="active"><a href="#">My Devices</a></li>
-                                <li><a href="#">Dashboard</a></li>
+                                <li className="active"><NavLink to="/myprojects">My Projects</NavLink></li>
+                                <li><a href="#">My Bids</a></li>
                                 <li><a href="#">Graphs</a></li>
-                                <li><a href="#">Contact</a></li>
+                                <li><a href="/editprofile">Edit Profile</a></li>
                             </ul>
 
                             <ul className="nav navbar-nav navbar-right">

@@ -1,6 +1,10 @@
+import {Button} from 'react-bootstrap';
+import * as API from "../api";
+
 var React = require('react');
 var NavBar = require('../components/navbar');
 var dashedBorder = {border:'1px dashed'}
+
 
 
 class PostProject extends React.Component{
@@ -11,11 +15,51 @@ class PostProject extends React.Component{
             skills:'',
             pay:'',
             budget:'',
-            upgrade:''
+            upgrade:'',
+            currency:''
         },
         isLoggedIn: false,
         message: ''
     };
+
+    handleSubmit = () => {
+        console.log(this.state.project);
+         API.postProject(this.state.project)
+             .then((res) => {
+                 console.log(res.status);
+                 if (res.status === '201') {
+                     this.setState({
+                         isLoggedIn: true,
+                         message: "Project Posted Successfully..!!"
+                     });
+                     this.props.history.push('/dashboard');
+                 } else if (res.status === '401') {
+                     this.setState({
+                         isLoggedIn: false,
+                         message: "post Failed. Try again..!!",
+                           });
+                 }
+             });
+    };
+
+    handleChange(e) {
+        this.setState({ value: e });
+    }
+
+    handleChangePay = (e) => {
+        this.setState(
+            {budget: e.target.value});
+        console.log(e.target.value);
+    };
+
+    handleChangeCur = (e) => {
+        this.setState(
+            {currency: e.target.value});
+        console.log(e.target.value);
+    };
+
+
+
     render(){
         return(
             <div>
@@ -30,7 +74,7 @@ class PostProject extends React.Component{
                                onChange={(event) => {
                                    this.setState({
                                        project: {
-                                           ...this.state.name,
+                                           ...this.state.project,
                                            name: event.target.value
                                        }
                                    });
@@ -44,8 +88,8 @@ class PostProject extends React.Component{
                                onChange={(event) => {
                                    this.setState({
                                        project: {
-                                           ...this.state.description,
-                                           name: event.target.value
+                                           ...this.state.project,
+                                           description: event.target.value
                                        }
                                    });
                                }}/> <br/> <br/><br/>
@@ -63,24 +107,87 @@ class PostProject extends React.Component{
 
                         <div id='appText'>
                             <div className='tagHere'></div> <br/>
-                            <input type="text" className="form-control input-lg" placeholder="What skills are required?" value={this.state.project.skills}
+                            <input type="text" className="form-control input-lg" placeholder="What skills are required?" value={this.state.project.skills} list="skills"
+                                   multiple="multiple"
                                    onChange={(event) => {
                                        this.setState({
                                            project: {
-                                               ...this.state.skills,
-                                               name: event.target.value
+                                               ...this.state.project,
+                                               skills: event.target.value
                                            }
                                        });
                                    }}/>
+                            <datalist id="skills">
+
+                        </datalist>
                             <h3 className="font-grey"> Suggested skills: <a className="underline">  Website Design</a> ,<a className="underline"> Logo Design </a>,
                                 <a className="underline"> Mobile App Development </a>,<a className="underline"> Data Entry </a>, <a className="underline"> Article Writing</a> </h3>
                             <br/> <br/><br/>
 
                             <h3> How do you want to pay</h3>
-                            <input type="radio" name="payment" value="fixed" />  <span className="font-grey"> Fixed price project</span> <br/>
-                            <input type="radio" name="payment" value="hourly"/> <span className="font-grey"> Hourly project </span> <br/>
+                            <input type="radio" name="payment" value="Fixed" checked={this.state.project.pay === 'Fixed'} onChange={(event) => {
+                                this.setState({
+                                    project: {
+                                        ...this.state.project,
+                                        pay: event.target.value
+                                    }
+                                });
+                            }} />  <span className="font-grey"> Fixed price project</span> <br/>
+                            <input type="radio" name="payment" value="Hourly" onChange={(event) => {
+                                this.setState({
+                                    project: {
+                                        ...this.state.project,
+                                        pay: event.target.value
+                                    }
+                                });
+                            }}/> <span className="font-grey"> Hourly project </span> <br/>
+                            <br/> <br/><br/>
+
+                            <h3> What is your estimated budget? </h3>
+                            <div className="dropdown">
+                                <select id="ddlCurrency" className="input-lg" value={this.state.project.currency}
+                                        onChange={(event) => {
+                                            this.setState({
+                                                project: {
+                                                    ...this.state.project,
+                                                    currency: event.target.value
+                                                }
+                                            });
+                                        }} >
+                                    <option value="USD" >USD</option>
+                                    <option value="NZD" >NZD</option>
+                                    <option value="AUD" >AUD</option>
+                                    <option value="GBP" >GBP</option>
+                                    <option value="INR" >INR</option>
+                                </select> &nbsp; &nbsp;
+
+                                <select id="ddlBudget" className="input-lg" value={this.state.project.budget}
+                                        onChange={(event) => {
+                                            this.setState({
+                                                project: {
+                                                    ...this.state.project,
+                                                    budget: event.target.value
+                                                }
+                                            });
+                                        }} >
+                                    <option value="Micro project ($10 - 30 USD)" >Micro project ($10 - 30 USD)</option>
+                                    <option value="Simple project ($30 - 250 USD)" >Simple project ($30 - 250 USD)</option>
+                                    <option value="Very small project ($250-750 USD)" >Very small project ($250-750 USD)</option>
+                                    <option value="Small project ($750 - 1500 USD)" >Small project ($750 - 1500 USD)</option>
+                                    <option value="Medium project ($1500-3000 USD)" >Medium project ($1500-3000 USD)</option>
+                                    <option value="Large project($3000 - 5000 USD)" >Large project($3000 - 5000 USD)</option>
+                                </select>
+                            </div>
+                            <br/> <br/>
 
 
+                            <input type="submit" className="button-color" value= "Post My Project"
+                                   onClick={() => this.handleSubmit()}/>
+                            <br/> <br/>
+                            <hr color="#E3E1E1"/>
+                            <h3 className="font-grey"> By clicking 'Post My Project', you agree to the Terms & Conditions and Privacy Policy</h3> <br/> <br/> <br/>
+
+                            <h3 className="font-grey">Copyright © 2018 Freelancer Technology Pty Limited (ACN 142 189 759)</h3>
 
                         </div>
 
@@ -92,4 +199,5 @@ class PostProject extends React.Component{
     }
 }
 
-module.exports = PostProject;
+//module.exports = PostProject;
+export default PostProject;

@@ -22,7 +22,7 @@ function Nav(){
                       <li>
                     <div><Button bsStyle="warning" style={btnStyle} href='/postproject'
 
-                > Post a Query </Button> </div> </li>
+                > Post a Project </Button> </div> </li>
 
             </ul>
             </div>
