@@ -9,6 +9,7 @@ import Project from './projectdetails'
 import {Button} from 'react-bootstrap'
 import {logout} from "../api";
 
+var data = [];
 
 class Dashboard extends Component {
     constructor(props){
@@ -19,13 +20,33 @@ class Dashboard extends Component {
     state = {
         username: '',
         isLoggedIn:'',
-        userId: cookie.load('userId')
+        userId: cookie.load('userId'),
+        projectData:'',
+        message:''
     };
 
     componentWillMount(){
-        if(cookie.load('userId') == undefined){
-            console.log("logged in");
+        if(cookie.load('userId') != undefined){
             this.props.history.push('/dashboard');
+            // Fetch all projects
+            API.fetchAllProjects(this.state.userId)
+                .then((res) => {
+                    console.log("status " +[res.details.json]);
+                    if (res.status === '201') {
+                        this.setState({
+                            isLoggedIn: true,
+                            projectData: res.details
+                        });
+                        data = res.details;
+                        this.props.history.push('/dashboard');
+                    } else if (res.status === '401') {
+                        this.setState({
+                            isLoggedIn: false,
+                            message: "No projects found..!!",
+                        });
+                    }
+                });
+            // fetch all project ends here
         }else{
             console.log("in else "+cookie.load('userId'));
             API.checkSession()
@@ -48,7 +69,8 @@ class Dashboard extends Component {
         this.setState({
             username : this.props.username,
             email : this.props.email,
-            userId: cookie.load('userId')
+            userId: cookie.load('userId'),
+            projectData:''
         });
     }
 
@@ -73,90 +95,68 @@ class Dashboard extends Component {
 
 
     render() {
+        var self = this;
+        const withKeys = data.map((function(item, key){
+            return(
+                <tr key={item.idtblProject} onClick={self.handleClick}>
+                    <td><a href={`/projectdetails?projectid=${item.idtblProject}`}> {item.ProjectName}</a> </td>
+                    <td>{item.count}</td><td>{item.Bids}</td> <td>{(new Date(item.EndDate)).toLocaleDateString()}</td>
+                    <td>{item.budgetRange}</td>
+
+                </tr>
+            )
+        }))
+
         return (
             <div>
-            <NavBar/>
-            <div className="container" >
 
 
                 <Route exact path="/dashboard" render={() => (
+                    <div>
+                    <NavBar/>
                     <div >
+                    <div className="container">
                         {/*start from here*/}
-
-
                         <div className="container-fluid">
-                            <div className="text-right">
-                                <Button bsStyle="success" bsSize="sm" block
-                                        onClick={this.handleLogout}> Logout </Button>
-                            </div>
-                            <div className="text-center">
-                                <h3>Welcome to StayConnected dashboard</h3>
-                                <h4>Check details of all your nodes installed</h4>
-                            </div>
-                            <div className="row">
-                                <div className="col-sm-4 col-xs-12">
-                                    <div className="panel panel-default text-center">
-                                        <div className="panel-heading">
-                                            <h1>Node 1</h1>
-                                        </div>
-                                        <div className="panel-body">
-                                            <p><strong>Location</strong> Stack 1 - Row 1</p>
-                                            <p><strong>Base Temperature</strong> 73 F</p>
-                                            <p><strong>Is temp under control </strong> Yes</p>
-                                            <p><strong>If no is the HVAC on</strong> NA </p>
-                                            <p><strong>More details</strong> can be added here</p>
-                                        </div>
-                                        <div className="panel-footer">
-                                            <h3>Currently Off</h3>
-                                            <Button bsStyle="success" className="btn btn-lg">Details</Button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-4 col-xs-12">
-                                    <div className="panel panel-default text-center">
-                                        <div className="panel-heading">
-                                            <h1>Node 2</h1>
-                                        </div>
-                                        <div className="panel-body">
-                                            <p><strong>Location</strong> Stack 2 - Row 1</p>
-                                            <p><strong>Base Temperature</strong> 65 F</p>
-                                            <p><strong>Is temp under control </strong> No</p>
-                                            <p><strong>If no is the HVAC on</strong> Yes </p>
-                                            <p><strong>HVA start time</strong> 10:30 AM</p>
-                                        </div>
-                                        <div className="panel-footer">
-                                            <h3>Currently On</h3>
-                                            <Button bsStyle="success" className="btn btn-lg">Details</Button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-sm-4 col-xs-12">
-                                    <div className="panel panel-default text-center">
-                                        <div className="panel-heading">
-                                            <h1>Node 3</h1>
-                                        </div>
-                                        <div className="panel-body">
-                                            <p><strong>Location</strong> Stack 2 - Row 1</p>
-                                            <p><strong>Base Temperature</strong> 65 F</p>
-                                            <p><strong>Is temp under control </strong> No</p>
-                                            <p><strong>If no is the HVAC on</strong> Yes </p>
-                                            <p><strong>HVA start time</strong> 10:30 AM</p>
-                                        </div>
-                                        <div className="panel-footer">
-                                            <h3>Currently On</h3>
-                                            <Button bsStyle="success" className="btn btn-lg">Details</Button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div className="align-right">
+                                <ul className="pager">
+                                    <li><a href="#" className="active">Employer</a></li>
+                                    <li><a href="#">Freelancer</a></li>
+                                </ul>
                             </div>
                         </div>
 
+                        <div className="text-left">
+                            <h1> Tell us what you need done      </h1>
 
+
+                            <table className="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Bids</th>
+                                    <th>Average Bid</th>
+                                    <th>Bid End Date</th>
+                                    <th>Budget</th>
+                                </tr>
+
+                                </thead>
+                                <tbody>
+                                {/*{nameslist}*/}
+                                {withKeys}
+
+                                </tbody>
+                            </table>
+
+                            {/*Container ends here */}
+                        </div>
 
                         {/*add code here*/}
                         {/*Welcome to my App..!! This is dashboard <br/>*/}
                         {/*UserName:  {this.props.username ? this.props.username: '' }  <br/>*/}
                         {/*Email : {this.props.email}*/}
+                    </div>
+                    </div>
                     </div>
                 )}/>
 
@@ -171,7 +171,6 @@ class Dashboard extends Component {
                 )}/>
 
 
-            </div>
             </div>
         );
     }

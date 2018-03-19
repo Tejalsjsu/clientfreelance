@@ -55,6 +55,7 @@ class Login extends Component{
                     cookie.save('userId', this.state.token, { path: '/' });
                     this.props.history.push("/dashboard");
                 } else if (res.status === '401') {
+                    console.log("in fail");
                     this.setState({
                         isLoggedIn: false,
                         message: "Wrong username or password. Try again..!!"
@@ -66,6 +67,7 @@ class Login extends Component{
     render(){
         return(
             <div style={divStyle3}>
+
                 <Route exact path="/login" render={() =>(
                     <div>
                         <div className="col-sm-4" style={divStyle2}> </div>
@@ -76,7 +78,7 @@ class Login extends Component{
 
                             <img src={logo} style={imgStyle} alt="logo"/>
                             <hr color="#E3E1E1"/>
-                            <input type="text" className="form-control" placeholder="Enter User Name" value={this.state.userdata.username}
+                            <input type="email" className="form-control" placeholder="Enter email" value={this.state.userdata.username}
                                    
                                    onChange={(event) => {
                                        this.setState({

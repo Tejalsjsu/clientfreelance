@@ -95,7 +95,7 @@ class Signup extends Component{
                         </div>
 
                         <hr color="#E3E1E1"/>
-                        <div> Already a Freelancer.com member?<Link to="/login"> Log In</Link> </div>
+                        {/*<div> Already a Freelancer.com member?<Link to="/login"> Log In</Link> </div>*/}
                         <div className="row justify-content-md-center">
                             <div className="col-md-3">
                                 {this.state.message && (

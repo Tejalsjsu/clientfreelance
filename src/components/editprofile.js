@@ -128,15 +128,7 @@ class EditProfile extends Component{
                             <div className="col-sm-6">
                                 <div className="media-body text-left padd   ing">
                                     <h3 > User Name </h3> <br/>
-                                    {/*<input type="text" className="form-control input-lg" placeholder="User Name" value={this.state.userdata.name}*/}
-                                           {/*onChange={(event) => {*/}
-                                               {/*this.setState({*/}
-                                                   {/*userdata: {*/}
-                                                       {/*...this.state.userdata,*/}
-                                                       {/*name: event.target.value*/}
-                                                   {/*}*/}
-                                               {/*});*/}
-                                           {/*}}/> <br/> <br/>*/}
+
                                     <h4 className="media-heading">Enter Professional Headline:</h4>
                                     <textarea type="text" className="form-control input-lg" placeholder={this.state.proffesionHeading} value={this.state.userdata.proffesionHeading}
                                               maxLength={50}

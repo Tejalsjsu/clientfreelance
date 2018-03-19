@@ -32,12 +32,18 @@ class PostProject extends React.Component{
                          isLoggedIn: true,
                          message: "Project Posted Successfully..!!"
                      });
-                     this.props.history.push('/dashboard');
+                     this.props.history.push('/postproject');
                  } else if (res.status === '401') {
                      this.setState({
-                         isLoggedIn: false,
+                         isLoggedIn: true,
                          message: "post Failed. Try again..!!",
                            });
+                 }else if (res.status === '402') {
+                     this.setState({
+                         isLoggedIn: false,
+                         message: "Session Expired..!!",
+                     });
+                     this.props.history.push('/login');
                  }
              });
     };
@@ -66,6 +72,15 @@ class PostProject extends React.Component{
             <NavBar/>
                 <div className="container">
                     <div className="text-left">
+                        <div >
+                            {/*<div className="col-md-3">*/}
+                            {this.state.message && (
+                                <div className="alert alert-warning" role="alert">
+                                    {this.state.message}
+                                </div>
+                            )}
+                            {/*</div>*/}
+                        </div>
                 <h1> Tell us what you need done </h1>
                 <div className="font-grey"> Get free quotes from skilled freelancers within minutes, view profiles, ratings and portfolios and chat with them. Pay the freelancer only when you are 100% satisfied with their work.</div>
                     <br/> <br/><br/>

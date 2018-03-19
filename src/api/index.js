@@ -188,3 +188,76 @@ export const fetchUserProfile = () =>
             console.log("This is error in fetch user Profile");
             return error;
         });
+
+export const fetchAllProjects = () =>
+    fetch(`${api}/users/getAllProjects`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    }).then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in fetch projects");
+            return error;
+        });
+
+
+
+export const fetchProjectDetails = (projectdata) =>
+    fetch(`${api}/users/getProjectDetails`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(projectdata)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error while updating profile");
+            return error;
+        });
+
+export const postBid = (projectdetails) =>
+    fetch(`${api}/users/postBid`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(projectdetails)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+
+
+export const fetchBidInfo = (projectdetails) =>
+    fetch(`${api}/users/getBidInfo`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(projectdetails)
+    }).then((res) => res.json())
+        .then((data) => {
+            console.log("in bids then " +data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in fetch Bid info");
+            return error;
+        });

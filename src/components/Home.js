@@ -10,7 +10,7 @@ function Home(){
     return(
         <div className=".container-fluid">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner" role="listbox">
+            <div className="carousel-inner" role="listbox">
         <Carousel>
             <Carousel.Item>
                 <img style={imgStyle} alt="freelance.com" src={img1} />
