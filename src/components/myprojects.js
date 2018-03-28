@@ -85,9 +85,9 @@ class MyProjects extends Component {
         const withKeys = data.map((function(item, key){
             return(
                 <tr key={item.idtblProject} onClick={self.handleClick}>
-
-                    <td><a href={`/myprojectdetails?projectid=${item.idtblProject}`}>{item.ProjectName}</a></td>
-                    <td>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.EndDate)).toLocaleDateString()}</td>
+                {/*changed coloumn names as per mongo db column names*/}
+                    <td><a href={`/myprojectdetails?projectid=${item._id}`}>{item.projectName}</a></td>
+                    <td>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
                     <td>{item.budgetRange}</td>
                     <td>
                         <select id="ddlactions" className="input-sm"
