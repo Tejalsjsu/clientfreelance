@@ -8,6 +8,9 @@ let btnStyle = { marginTop: '8px', marginRight: '4px'}
 
 
 function NavBar() {
+    this.activateClass = (props) =>{
+        this.className= 'active'
+    }
         return (
            <div>
                 <nav className="navbar navbar-inverse navbar1">
@@ -21,10 +24,10 @@ function NavBar() {
                         </div>
                         <div className="collapse navbar-collapse" id="myNavbar">
                             <ul className="nav navbar-nav">
-                                <li className="active"><NavLink to="/dashboard">Dashboard</NavLink></li>
-                                <li><NavLink to="/myprojects">My Projects</NavLink></li>
-                                <li><a href="#">My Bids</a></li>
-                                <li><a href="/editprofile">Edit Profile</a></li>
+                                <li onClick={this.activateClass} className='active'><NavLink exact to="/dashboard">Dashboard</NavLink></li>
+                                <li onClick={this.activateClass}><NavLink to="/myprojects">My Projects</NavLink></li>
+                                <li onClick={this.activateClass}><a href="#">My Bids</a></li>
+                                <li onClick={this.activateClass}><a href="/editprofile">Edit Profile</a></li>
                             </ul>
 
                             <ul className="nav navbar-nav navbar-right">
