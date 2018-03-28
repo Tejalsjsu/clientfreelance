@@ -21,7 +21,7 @@ const headers = {
 
 
 export const doLogin = (payload) =>
-    fetch(`${api}/users/doLogin`, {
+    fetch(`${api}/mongoCalls/login`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -49,7 +49,7 @@ export const doLogin = (payload) =>
 // });
 
 export const saveData = (details) =>
-    fetch(`${api}/users/saveData`, {
+    fetch(`${api}/mongoCalls/signup_mongodb`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -118,7 +118,7 @@ export const fetchData = (payload) =>
 
 
 export const postProject = (projectdetails) =>
-    fetch(`${api}/users/postProject`, {
+    fetch(`${api}/kafka/kafkaProducer/postproject`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -136,7 +136,7 @@ export const postProject = (projectdetails) =>
 
 
 export const fetchProjects = () =>
-    fetch(`${api}/users/getProjects`, {
+    fetch(`${api}/mongoCalls/getProjectsByUser`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -190,7 +190,7 @@ export const fetchUserProfile = () =>
         });
 
 export const fetchAllProjects = () =>
-    fetch(`${api}/users/getAllProjects`, {
+    fetch(`${api}/kafka/kafkaProducer/getAllProjects`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -199,7 +199,7 @@ export const fetchAllProjects = () =>
         credentials: 'include',
     }).then((res) => res.json())
         .then((data) => {
-            console.log(data);
+           // console.log(data);
             return data
                 ;})
         .catch(error => {
