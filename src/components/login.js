@@ -51,8 +51,9 @@ class Login extends Component{
                         email: res.email,
                         username: this.state.userdata.name,
                         token: res.token,
+                        userId : res.userId
                     });
-                    cookie.save('userId', this.state.token, { path: '/' });
+                    cookie.save('userId', this.state.userId, { path: '/' });
                     this.props.history.push("/dashboard");
                 } else if (res.status === '401') {
                     console.log("in fail");
@@ -60,6 +61,7 @@ class Login extends Component{
                         isLoggedIn: false,
                         message: "Wrong username or password. Try again..!!"
                     });
+                    this.props.history.push("/login");
                 }
             });
     };
