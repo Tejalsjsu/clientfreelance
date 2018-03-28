@@ -13,6 +13,7 @@ import ProjectDetails from './components/projectdetails';
 import MyProjectDetails from './components/myprojectdetails';
 import EditProfile from './components/editprofile';
 import NavLogin from './components/NavLogin';
+import BrowseProjects from './components/browseProjects'
 
 class App extends Component {
   render() {
@@ -34,6 +35,7 @@ class App extends Component {
                   <Route path="/projectdetails" component={ProjectDetails}/>
                   <Route path="/myprojectdetails" component={MyProjectDetails}/>
                   <Route path="/editprofile" component={EditProfile}/>
+                  <Route path="/browseProjects" component={BrowseProjects}/>
               </div>
           </BrowserRouter>
 
