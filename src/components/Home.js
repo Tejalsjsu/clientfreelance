@@ -1,5 +1,5 @@
-var img1 = require('../image/freelancerHome.jpg');
-var img2 = require('../image/freelancerHome2.jpg');
+var img1 = require('../image/banner1.png');
+var img2 = require('../image/banner2.png');
 var React = require('react');
 var Carousel = require('react-bootstrap').Carousel;
 let imgStyle = {width: '100%', height: '700px'};
@@ -9,7 +9,7 @@ let footerText = {color: '#5DADE2'}
 function Home(){
     return(
         <div className=".container-fluid">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div id="myCarousel" className="carousel slide" data-ride="carousel">
             <div className="carousel-inner" role="listbox">
         <Carousel>
             <Carousel.Item>

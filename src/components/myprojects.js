@@ -7,6 +7,9 @@ import NavBar from '../components/navbar';
 import Post from '../components/postproject';
 import {logout} from "../api";
 import ProjectDetails from '../components/projectdetails'
+import PastProjectEmployee from '../components/PastProjectEmployee';
+import WorkInProgressEmployee from '../components/WorkInProgressEmployee'
+import CurrentWorkAsFreelancer from '../components/CurrentWorkAsFreelancer';
 
 var data = [];
 
@@ -38,7 +41,7 @@ class MyProjects extends Component {
                         projectData: res.details
                     });
                     data = res.details;
-                    console.log("state " +this.state.projectData[0].projectName);
+                    console.log("state " +this.state.projectData);
                     this.props.history.push('/myprojects');
                 } else if (res.status === '401') {
                     console.log("No records");
@@ -84,12 +87,12 @@ class MyProjects extends Component {
         var self = this;
         const withKeys = data.map((function(item, key){
             return(
-                <tr key={item.idtblProject} onClick={self.handleClick}>
+                <tr key={item.idtblProject} onClick={self.handleClick} className="odd ProjectTable-row project-details">
                 {/*changed coloumn names as per mongo db column names*/}
-                    <td><a href={`/myprojectdetails?projectid=${item._id}`}>{item.projectName}</a></td>
-                    <td>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
-                    <td>{item.budgetRange}</td>
-                    <td>
+                    <td className='ProjectTable-cell '><a href={`/myprojectdetails?projectid=${item._id}`}>{item.projectName}</a></td>
+                    <td className='ProjectTable-cell'>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
+                    <td className='ProjectTable-cell'>{item.budgetRange}</td>
+                    <td className='ProjectTable-cell'>
                         <select id="ddlactions" className="input-sm"
                                 onChange={(event) => {
                                     this.setState({
@@ -111,7 +114,7 @@ class MyProjects extends Component {
             <div>
                 <NavBar/>
                 <Route exact path="/MyProjects" render={() => (
-
+                    <div className="page">
                 <div className="container">
                     <div >
                         {/*<div className="col-md-3">*/}
@@ -122,19 +125,48 @@ class MyProjects extends Component {
                         )}
                         {/*</div>*/}
                     </div>
+                    <div className="container-fluid">
+                        <div className="align-right">
+                            <ul className="pager">
+                                <li><a href="myprojects.js" className="active">Employer</a></li>
+                                <li><NavLink to="/CurrentWorkAsFreelancer" className="pagerNormal">Freelancer</NavLink></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
                     <div className="text-left">
-                        <h1> Projects posted by me   </h1>
+                        <h1> Projects   </h1>
+                        <br/>
+                        <div className="dashboard_tab_wrapper">
+                            <div className="dashboard_tab tab-clicked"><NavLink to="#">Open Projects</NavLink></div>
+                            <div className="dashboard_tab"> <NavLink to="/WorkInProgressEmployee">Work in Progress</NavLink></div>
+                            <div className="dashboard_tab"><NavLink to="/PastProjectEmployee">Past Work</NavLink> </div>
+                        </div>
+                        <div className="dashboardTable-setting container">
+                                <input type="text" className="dashboardTable-setting-search gaf-container" id="search_my_projects"
+                                       placeholder="Enter project id, contest name, etc."/><button className="setting-search-btn btn-search" type="submit"><i className="glyphicon glyphicon-search"></i></button>
 
 
-                        <table className="table table-hover">
-                            <thead>
+                            <select className='dashboardTable-setting-show gaf-container' id="show_no" >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+
+                            &nbsp;&nbsp;<button className="setting-search-btn btn-search">  <span className="glyphicon glyphicon-repeat"></span></button>
+
+                        </div>
+
+                        <table className='ProjectTable'>
+                            <thead className='ProjectTable-head'>
                             <tr>
-                                <th>Name</th>
-                                <th>Bids</th>
-                                <th>Average Bid</th>
-                                <th>Bid End Date</th>
-                                <th>Budget</th>
-                                <th>Action</th>
+                                <th className='ProjectTable-header'>PROJECT NAME</th>
+                                <th className='ProjectTable-header'>BIDS</th>
+                                <th className='ProjectTable-header'>AVG BID</th>
+                                <th className='ProjectTable-header'>BID END DATE</th>
+                                <th className='ProjectTable-header'>ACTION</th>
                             </tr>
 
                             </thead>
@@ -148,6 +180,7 @@ class MyProjects extends Component {
                         {/*Container ends here */}
                     </div>
                 </div>
+                    </div>
                 )}/>
                 <Route path="/postproject" render={() => (
                     <div>
@@ -161,6 +194,28 @@ class MyProjects extends Component {
                         <ProjectDetails />
                     </div>
                 )}/>
+
+                <Route exact path="/PastProjectEmployee" render = {() => (
+
+                    <div>
+                        <PastProjectEmployee />
+                    </div>
+                )}/>
+
+                <Route exact path="/WorkInProgressEmployee" render = {() => (
+
+                    <div>
+                        <WorkInProgressEmployee />
+                    </div>
+                )}/>
+
+                <Route exact path="/CurrentWorkAsFreelancer" render = {() => (
+
+                    <div>
+                        <CurrentWorkAsFreelancer />
+                    </div>
+                )}/>
+
 
             </div>
 
