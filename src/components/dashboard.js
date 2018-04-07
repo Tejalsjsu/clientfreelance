@@ -30,7 +30,7 @@ class Dashboard extends Component {
 
     componentWillMount(){
         if(cookie.load('userId') != undefined){
-            this.props.history.push('/dashboard');
+           // this.props.history.push('/dashboard');
             // Fetch all projects
             API.fetchAllProjects(this.state.userId)
                 .then((res) => {
@@ -38,7 +38,8 @@ class Dashboard extends Component {
                     if (res.status === '201') {
                         this.setState({
                             isLoggedIn: true,
-                            projectData: res.details
+                            //projectData: res
+                            projectData: res
                         });
                         data = res.details;
                         console.log(this.state.projectData);
@@ -125,15 +126,15 @@ class Dashboard extends Component {
                         <div className="col-sm-1"><img src={cmpicon} style={iconstyle}/> </div>
                         <div  className="col-sm-10">
                         <span className="ProjectTable-title">
-                            <a href="#" className='ProjectTable-title'>{this.state.projectData.details[pd].projectName}</a></span><br/>
-                            ...{this.state.projectData.details[pd].projectDescription && this.state.projectData.details[pd].projectDescription.substr(0,100)}... <br/>
-                            {this.state.projectData.details[pd].skills && this.state.projectData.details[pd].skills.split(',').map((skill) => <a href="#" className='a-skills'>{skill},</a>)}
+                            <a href="#" className='ProjectTable-title'>{this.state.projectData.details[pd]._id.projectName}</a></span><br/>
+                            ...{this.state.projectData.details[pd]._id.projectDescription && this.state.projectData.details[pd]._id.projectDescription.substr(0,100)}... <br/>
+                            {this.state.projectData.details[pd]._id.skills && this.state.projectData.details[pd]._id.skills.split(',').map((skill) => <a href="#" className='a-skills'>{skill},</a>)}
                         </div>
                     </td>
-                    <td className='ProjectTable-cell'> {this.state.projectData.details[pd].Bids}</td>
-                    <td className='ProjectTable-cell'> {this.state.projectData.details[pd].Bids}</td>
-                    <td className='ProjectTable-cell'> {(new Date(this.state.projectData.details[pd].postProjectDate).toLocaleDateString())}</td>
-                    <td className='ProjectTable-cell'> {this.state.projectData.details[pd].budgetRange}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd].count}> {this.state.projectData.details[pd].count}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd].average}> {this.state.projectData.details[pd].average}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd]._id.postProjectDate}> {(new Date(this.state.projectData.details[pd]._id.postProjectDate).toLocaleDateString())}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd]._id.budgetRange}> {this.state.projectData.details[pd]._id.budgetRange}</td>
                 </tr>
             )
         }))
