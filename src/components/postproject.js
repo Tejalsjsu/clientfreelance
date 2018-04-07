@@ -1,6 +1,7 @@
 import {Button} from 'react-bootstrap';
 import * as API from "../api";
 
+
 var React = require('react');
 var NavBar = require('../components/navbar');
 var dashedBorder = {border:'1px dashed'}
@@ -36,7 +37,7 @@ class PostProject extends React.Component{
                  } else if (res.status === '401') {
                      this.setState({
                          isLoggedIn: true,
-                         message: "post Failed. Try again..!!",
+                         message: "Post Failed. Try again..!!",
                            });
                  }else if (res.status === '402') {
                      this.setState({
@@ -64,7 +65,14 @@ class PostProject extends React.Component{
         console.log(e.target.value);
     };
 
-
+    onDrop = (acceptedFiles, rejectedFiles) => {
+        var projectFiles = this.state.projectFiles;
+        projectFiles.push(acceptedFiles);
+        this.setState({
+            projectFiles: projectFiles,
+            isUploaded : true
+        });
+    }
 
     render(){
         return(
@@ -117,6 +125,8 @@ class PostProject extends React.Component{
                                 <div className="font-grey"> Drag and Drop images or documents that might be useful in explaining your project brief here.<br/> </div> </div> <br/>
 
                         </fieldset> <br/> <br/> <br/>
+
+
                         <h3> What skills are required? </h3>
                         <div className="font-grey"> Enter up to 5 skills that best describe your project. Freelancers will use these skills to find projects they are most interested and experienced in. </div>
 

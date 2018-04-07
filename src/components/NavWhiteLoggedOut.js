@@ -38,17 +38,29 @@ function NavBarLoggedOut(){
                             <ul className="dropdown-menu list-group">
                                 <li> <br/><strong> &nbsp; Find Work </strong> <br/></li>
                                 <li> <hr/> </li>
-                                <li><NavLink activeClassName='active' to="/login">Project with my skills</NavLink> <br/></li>
+                                <li><NavLink activeClassName='active' to="/projectWithMySkills">Project with my skills</NavLink> <br/></li>
                                 <li><NavLink to="./browseProjects"> Browse Projects </NavLink> <br/></li>
                             </ul>
                         </li>
 
-                        <li> <NavLink activeClassName='active' to='/postproject'> How we work </NavLink> </li>
+                        <li className="dropdown">
+                            <a className="dropdown-toggle" data-toggle="dropdown" href="#"> My Projects &nbsp;
+                                <span className="glyphicon glyphicon-triangle-bottom"></span>
+                            </a>
+                            <ul className="dropdown-menu list-group">
+                                <li> <br/><strong> &nbsp; Manage </strong> <br/></li>
+                                <li> <hr/> </li>
+                                <li><NavLink activeClassName='active' to="/myprojects">My Projects</NavLink> <br/></li>
+                                <li><NavLink to="./postproject">Dashboard</NavLink> <br/></li>
+                            </ul>
+                        </li>
+
                     </ul>
 
 
                     <ul className="nav navbar-nav navbar-right">
                         <li><NavLink to="/signup"> <span className="glyphicon glyphicon-user"> </span> Sign Up</NavLink></li>
+                        <li><NavLink to="/login"> <span className="glyphicon glyphicon-user"> </span> Login </NavLink></li>
                         <li>
                             <div><Button bsStyle="warning" style={btnStyle} href='/postproject'
 

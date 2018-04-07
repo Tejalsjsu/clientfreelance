@@ -45,6 +45,7 @@ class ProjectDetails extends Component{
 
     componentWillMount(){
         var temPid = this.state.userdata.projectId;
+        console.log("Before fetch " +this.state.userdata.projectId);
         API.fetchProjectDetails(this.state.userdata)
             .then((res) => {
                 console.log("status " +res.details);
@@ -105,21 +106,77 @@ class ProjectDetails extends Component{
                             )}
                         </div>
 
+                        <h2 className="project_name padding-t20 padding-b20"> &nbsp; &nbsp;{this.state.userdata.projectName} </h2>
+                        <div className="col-sm-12">
+                            <div className="panel panel-default text-center">
+                                <div className="panel-body text-left">
+                                    <div className="block align-c">
+                                        <p className="project-p padding-l10 padding-r10">Bids</p>
+                                        <div className="text-blue padding-l10 padding-r10">
+                                            1
+                                        </div>
+                                    </div>
+                                    <div className="block align-c border-l border-r">
+                                        <p className="project-p padding-l10 padding-r10">AVG Bid (USD)</p>
+                                        <div className="text-blue  padding-l10 padding-r10">
+                                            $250
+                                        </div>
+                                    </div>
+                                    <div className="block align-c border-r">
+                                        <p className="project-p padding-l10 padding-r10"> Project Budget (USD)</p>
+                                        <div className="text-blue  padding-l10 padding-r10">
+                                            {this.state.userdata.projectBudget}
+                                        </div>
+                                    </div>
+
+                                    <div className="block align-c right">
+                                        <div className="text-green bold larger margin-b5 padding-r10"> OPEN </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                             {this.state.userdata.projectName!= undefined &&
 
                                 <div className="col-sm-12">
                                 <div className="panel panel-default text-center">
-                                <div className="panel-heading">
-                                    <h4>{this.state.userdata.projectName}</h4>
+                                {/*<div className="panel-heading">*/}
+                                    {/*<h4>{this.state.userdata.projectName}</h4>*/}
+                                {/*</div>*/}
+                                <div className="panel-body text-left projectBrief-inner">
+                                    <div className="project-brief margin-b5 col-sm-8">
+                                        <h2 className="project-brief-subheading bold"> Project Discription </h2>
+                                        <p className="project-p">{this.state.userdata.projectDescription}</p>
+
+                                        <h2 className="project-brief-subheading bold"> About the employer </h2>
+                                        <p className="project-p">{this.state.userdata.projectName}</p>
+
+                                        <h2 className="project-brief-subheading bold"> Skills required </h2>
+                                        <p className="project-p">{this.state.userdata.projectSkills}</p>
+
+
+                                    </div>
+                                    <div className="project-sidebar col-sm-4 padding-r10">
+                                        <div className="padding-r10 padding-l10 padding-t20">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" className="btn-large btn-primary-green">Bid Now</a> <br/>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div className="panel-body text-left">
-                                    <p><strong>Description: </strong>{this.state.userdata.projectDescription}</p>
-                                    <p><strong>Skills: </strong> {this.state.userdata.projectSkills}</p>
-                                    <p><strong>Budget: </strong> {this.state.userdata.projectBudget}</p>
-                                    <p><strong>Project Id: </strong> {this.state.userdata.projectId}</p>
-                                </div>
+                                    <div className="panel-body text-left projectBrief-inner">
+                                        <div className="project-brief margin-b5 col-sm-10">
+                                            <a href="postproject" className="btn-large btn-primary"> Post a Project like this </a>
+                                        </div>
+                                    <div className="block align-right padding-r10 right">
+                                        <div className="ProjectReport">
+                                            <span>Project Id:</span>
+                                            <span> {this.state.userdata.projectId}</span>
+                                        </div>
+                                    </div>
+                                    </div>
                                 <div>
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"> <Button bsStyle="success">Bid Now</Button></a> <br/> <br/>
+
                                 </div>
                                     <div className="panel-footer">
                                             <div id="collapse1" className="panel-collapse collapse">

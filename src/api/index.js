@@ -190,7 +190,8 @@ export const fetchUserProfile = () =>
         });
 
 export const fetchAllProjects = () =>
-    fetch(`${api}/kafka/kafkaProducer/getAllProjects`, {
+    //fetch(`${api}/kafka/kafkaProducer/getAllProjects`, {
+    fetch(`${api}/mongoCalls/getAllProjectsWithBids`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -207,10 +208,28 @@ export const fetchAllProjects = () =>
             return error;
         });
 
+export const fetchAllProjectsForBrowse = () =>
+    //fetch(`${api}/kafka/kafkaProducer/getAllProjects`, {
+    fetch(`${api}/mongoCalls/getAllProjectsWithBids`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    }).then((res) => res.json())
+        .then((data) => {
+            // console.log(data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in fetch projects");
+            return error;
+        });
 
 
 export const fetchProjectDetails = (projectdata) =>
-    fetch(`${api}/users/getProjectDetails`, {
+    fetch(`${api}/mongoCalls/getProjectDetails`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -226,7 +245,7 @@ export const fetchProjectDetails = (projectdata) =>
         });
 
 export const postBid = (projectdetails) =>
-    fetch(`${api}/users/postBid`, {
+    fetch(`${api}/mongoCalls/postBid`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -259,5 +278,38 @@ export const fetchBidInfo = (projectdetails) =>
                 ;})
         .catch(error => {
             console.log("This is error in fetch Bid info");
+            return error;
+        });
+
+export const addMoney = (userdata) =>
+    fetch(`${api}/kafka/kafkaProducer/addMoney`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(userdata)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+
+export const withdrawMoney = (userdata) =>
+    fetch(`${api}/kafka/kafkaProducer/withdrawMoney`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(userdata)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error");
             return error;
         });
