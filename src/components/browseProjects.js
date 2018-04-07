@@ -30,6 +30,7 @@ class browseProjects extends Component {
             bidamount:'',
             duration:''
          },
+        pageOfItems:'',
         message:''
     };
 
@@ -43,19 +44,25 @@ class browseProjects extends Component {
         });
     }
 
+    // onChangePage(pageOfItems) {
+    //     // update state with new page of items
+    //     this.setState({ pageOfItems: pageOfItems });
+    // }
 
     componentWillMount() {
         if (cookie.load('userId') != undefined) {
             // Fetch all projects
-            API.fetchAllProjects(this.state.userId)
+            API.fetchAllProjectsForBrowse(this.state.userId)
                 .then((res) => {
                     if (res.status === '201') {
                         this.setState({
                             isLoggedIn: true,
-                            projectData: res.details
+                            pages:res.length,
+                            projectData: res,
+                            search: []
                         });
                         data = res.details;
-                        console.log("after fetch" +this.state.projectData[0].ProjectName)
+                        console.log("after fetch" +this.state.projectData.details[0]._id);
                         //this.props.history.push('/browseProjects');
                     } else if (res.status === '401') {
                         this.setState({
@@ -65,72 +72,60 @@ class browseProjects extends Component {
                     }
                 });
             // fetch all project ends here
-        }
+        } // add code to redirect to login page
     }
 
     render(){
+
         var self = this;
-        console.log("On object " +Object.keys(this.state.projectData));
-        const withKeys = data.map((function(item, key){
+        // console.log("On object " +Object.keys(this.state.projectData));
+        // const withKeys = data.map((function(item, key){
+        //     return(
+        //         <tr key={item.idtblProject} onClick={self.handleClick}>
+        //             <td key={item.idtblProject}><a href={`/projectdetails?projectid=${item.idtblProject}`}> {item.ProjectName}</a></td>
+        //             <td>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.EndDate)).toLocaleDateString()}</td>
+        //             <td>{item.budgetRange}</td>
+        //         </tr>
+        //     )
+        // }))
+
+
+        const withfilter = (this.state.projectData.details && (Object.keys(this.state.projectData.details)).map((pd) =>{
             return(
-                <tr key={item.idtblProject} onClick={self.handleClick}>
-                    <td key={item.idtblProject}><a href={`/projectdetails?projectid=${item.idtblProject}`}> {item.ProjectName}</a></td>
-                    <td>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.EndDate)).toLocaleDateString()}</td>
-                    <td>{item.budgetRange}</td>
+                <tr key={this.state.projectData.details[pd]._id.projectId} onClick={self.handleClick} className="odd ProjectTable-row project-details">
+                    <td key={this.state.projectData.details[pd]._id.projectName} className='ProjectTable-cell ProjectTable-summaryColumn' >
+                        <div className="col-sm-1"><img src={cmpicon} style={iconstyle}/> </div>
+                        <div  className="col-sm-10">
+                        <span className="ProjectTable-title">
+                            <a href={`/projectdetails?projectid=${this.state.projectData.details[pd]._id.projectId}`} className='ProjectTable-title'>{this.state.projectData.details[pd]._id.projectName}</a></span><br/>
+                            ...{this.state.projectData.details[pd]._id.projectDescription && this.state.projectData.details[pd]._id.projectDescription.substr(0,100)}... <br/>
+                            {this.state.projectData.details[pd].skills && this.state.projectData.details[pd].skills.split(',').map((skill) => <a href="#" className='a-skills'>{skill},</a>)}
+                        </div>
+                    </td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd].count}> {this.state.projectData.details[pd].count}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd]._id.postProjectDate}> {(new Date(this.state.projectData.details[pd]._id.postProjectDate).toLocaleDateString())}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd].average}> {this.state.projectData.details[pd].average}</td>
                 </tr>
             )
         }))
-        //
-        // let fiteredNames = Object.keys(fiteredNames).map((pd) => fiteredNames[pd].ProjectName).filter((ProjectNames) => {
-        //     return (ProjectNames.ProjectName && ProjectNames.ProjectName.indexOf(this.state.search) !==-1);
-        // });
-        // function match(word) {
-        //      if((self.state.search)!== undefined && self.state.projectData !== undefined)  {
-        //          if (self.state.projectData[word].ProjectName.contains(self.state.search))
-        //          return self.state.projectData[word].ProjectName;
-        //     }
-        // }
+        const newRecords = (this.state.search && (Object.keys(this.state.projectData.details))
+            .filter(key => this.state.search.includes(this.state.projectData.details[key]._id.projectName))
+            .reduce((obj, key) => {
+                return {
+                    ...obj,
+                    [key]: this.state.projectData.details[key]
+                };
+            }, {})
+        )
 
-
-        const withfilter = Object.keys(this.state.projectData).map((pd) =>{
+        const withfilter1 = (newRecords && (Object.keys(newRecords)).map((pd) =>{
             return(
-                <tr key={this.state.projectData[pd].idtblProject} onClick={self.handleClick} className="odd ProjectTable-row project-details">
-                    <td key={this.state.projectData[pd].ProjectName} className='ProjectTable-cell ProjectTable-summaryColumn' >
-                        <div className="col-sm-1"><img src={cmpicon} style={iconstyle}/> </div>
-                        <div  className="col-sm-10">
-                        <span className="ProjectTable-title">
-                            <a href="#" className='ProjectTable-title'>{this.state.projectData[pd].ProjectName}</a></span><br/>
-                            ...{this.state.projectData[pd].projectDescription && this.state.projectData[pd].projectDescription.substr(0,100)}... <br/>
-                            {this.state.projectData[pd].skills && this.state.projectData[pd].skills.split(',').map((skill) => <a href="#" className='a-skills'>{skill},</a>)}
-                        </div>
-                    </td>
-                    {/*<td className='ProjectTable-cell'> {this.state.projectData[pd].count}</td>*/}
-                    {/*<td className='ProjectTable-cell'> {(new Date(this.state.projectData[pd].postDate).toLocaleDateString())}</td>*/}
-                    {/*<td className='ProjectTable-cell'> {this.state.projectData[pd].Bids}</td>*/}
+                <tr>
+                    <td className='ProjectTable-cell' key={newRecords[pd]._id._id}> {newRecords[pd]._id.projectName}</td>
+
                 </tr>
             )
-        })
-
-
-        const withKeys1 = Object.keys(this.state.projectData).map((pd) =>{
-            return(
-                <tr key={this.state.projectData[pd].idtblProject} onClick={self.handleClick} className="odd ProjectTable-row project-details">
-                    <td key={this.state.projectData[pd].ProjectName} className='ProjectTable-cell ProjectTable-summaryColumn' >
-                        <div className="col-sm-1"><img src={cmpicon} style={iconstyle}/> </div>
-                        <div  className="col-sm-10">
-                        <span className="ProjectTable-title">
-                            <a href="#" className='ProjectTable-title'>{this.state.projectData[pd].ProjectName}</a></span><br/>
-                                ...{this.state.projectData[pd].projectDescription && this.state.projectData[pd].projectDescription.substr(0,100)}... <br/>
-                            {this.state.projectData[pd].skills && this.state.projectData[pd].skills.split(',').map((skill) => <a href="#" className='a-skills'>{skill},</a>)}
-                        </div>
-                        </td>
-                    <td className='ProjectTable-cell'> {this.state.projectData[pd].count}</td>
-                    <td className='ProjectTable-cell'> {(new Date(this.state.projectData[pd].postDate).toLocaleDateString())}</td>
-                    <td className='ProjectTable-cell'> {this.state.projectData[pd].Bids}</td>
-                </tr>
-            )
-        })
-
+        }))
         return(
             <div>
                 <MyProjectsNav/>
@@ -161,7 +156,7 @@ class browseProjects extends Component {
                         </div>
                             <br/>
                             <div className='section-heading'>
-                            <h3 align="left"> <strong> Browse Jobs on Freelance</strong> </h3>
+                            <h3 align="left"> <strong> Browse Jobs on Freelancer</strong> </h3>
                             </div>
                             <div className='section-heading text-left'>
                                     <div className="form-group">
@@ -262,12 +257,40 @@ class browseProjects extends Component {
 
                                         </tbody>
                                     </table>
+                                    <div className="col-sm-12">
+                                    <div className="dataTables_info col-sm-9">
+                                        Showing 1 to 20 of 220
+                                    </div>
+                                    <div className="dataTables_paginate col-sm-3">
+                                        <nav aria-label="Page navigation example">
+                                            <ul className="pagination">
+                                                <li className="page-item">
+                                                    <a className="page-link" href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                        <span className="sr-only">Previous</span>
+                                                    </a>
+                                                </li>
+                                                <li className="page-item"><a className="page-link" href="#">1</a></li>
+                                                <li className="page-item"><a className="page-link" href="#">2</a></li>
+                                                <li className="page-item"><a className="page-link" href="#">3</a></li>
+                                                <li className="page-item">
+                                                    <a className="page-link" href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                        <span className="sr-only">Next</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    </div>
+
+
+
+
+
                                 </div>
 
-
-
-
-
+<br/>
                                 <br/>
                             </div>
                         </div>
