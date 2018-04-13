@@ -90,7 +90,7 @@ class MyProjects extends Component {
                 <tr key={item.idtblProject} onClick={self.handleClick} className="odd ProjectTable-row project-details">
                 {/*changed coloumn names as per mongo db column names*/}
                     <td className='ProjectTable-cell '><a href={`/myprojectdetails?projectid=${item._id}`}>{item.projectName}</a></td>
-                    <td className='ProjectTable-cell'>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
+                    <td className='ProjectTable-cell'>{item.Bids}</td><td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
                     <td className='ProjectTable-cell'>{item.budgetRange}</td>
                     <td className='ProjectTable-cell'>
                         <select id="ddlactions" className="input-sm"
@@ -164,8 +164,8 @@ class MyProjects extends Component {
                             <tr>
                                 <th className='ProjectTable-header'>PROJECT NAME</th>
                                 <th className='ProjectTable-header'>BIDS</th>
-                                <th className='ProjectTable-header'>AVG BID</th>
                                 <th className='ProjectTable-header'>BID END DATE</th>
+                                <th className='ProjectTable-header'>BUDGET</th>
                                 <th className='ProjectTable-header'>ACTION</th>
                             </tr>
 

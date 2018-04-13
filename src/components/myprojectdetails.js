@@ -139,18 +139,17 @@ class MyProjectDetails extends Component{
     }
 
     handleSubmit = () => {
-        API.postBid(this.state.userdata)
+        API.hireFreelancer(this.state.userdata)
             .then((res) => {
                 console.log(res.status);
                 if (res.status === '201') {
                     this.setState({
                         isLoggedIn: true,
-                        message: "Bid Posted Successfully..!!"
+                        message: "Hired Successfully..!!"
                     });
-                    this.props.history.push('/projectdetails');
                 } else if (res.status === '401') {
                     this.setState({
-                        message: "post Failed. Try again..!!",
+                        message: "Hired Successfully..!!",
                     });
                 }
             });
@@ -182,7 +181,7 @@ class MyProjectDetails extends Component{
                                     </div>
                                 </div>
                                 <br/>
-                                <Button bsStyle="success" bsSize="sm" onClick={() => this.handleSubmit()}>Hire </Button>
+                                <Button bsStyle="success" bsSize="sm" onClick={() => self.handleSubmit()}>Hire </Button>
                             </div>
                         </div>
                     </div>
@@ -207,19 +206,122 @@ class MyProjectDetails extends Component{
                             )}
                         </div>
 
+                        <h2 className="project_name padding-t20 padding-b20"> &nbsp; &nbsp;{this.state.userdata.projectName} </h2>
+                        <div className="col-sm-12">
+                            <div className="panel panel-default text-center">
+                                <div className="panel-body text-left">
+                                    <div className="block align-c">
+                                        <p className="project-p padding-l10 padding-r10">Bids</p>
+                                        <div className="text-blue padding-l10 padding-r10">
+                                            1
+                                        </div>
+                                    </div>
+                                    <div className="block align-c border-l border-r">
+                                        <p className="project-p padding-l10 padding-r10">AVG Bid (USD)</p>
+                                        <div className="text-blue  padding-l10 padding-r10">
+                                            $250
+                                        </div>
+                                    </div>
+                                    <div className="block align-c border-r">
+                                        <p className="project-p padding-l10 padding-r10"> Project Budget (USD)</p>
+                                        <div className="text-blue  padding-l10 padding-r10">
+                                            {this.state.userdata.projectBudget}
+                                        </div>
+                                    </div>
+
+                                    <div className="block align-c right">
+                                        <div className="text-green bold larger margin-b5 padding-r10"> OPEN </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         {this.state.userdata.projectName!= undefined &&
 
                         <div className="col-sm-12">
                             <div className="panel panel-default text-center">
-                                    <div className="panel-heading">
-                                        <h4>{this.state.userdata.projectName}</h4>
+                                {/*<div className="panel-heading">*/}
+                                {/*<h4>{this.state.userdata.projectName}</h4>*/}
+                                {/*</div>*/}
+                                <div className="panel-body text-left projectBrief-inner">
+                                    <div className="project-brief margin-b5 col-sm-8">
+                                        <h2 className="project-brief-subheading bold"> Project Discription </h2>
+                                        <p className="project-p">{this.state.userdata.projectDescription}</p>
+
+                                        <h2 className="project-brief-subheading bold"> About the employer </h2>
+                                        <p className="project-p">{this.state.userdata.projectName}</p>
+
+                                        <h2 className="project-brief-subheading bold"> Skills required </h2>
+                                        <p className="project-p">{this.state.userdata.projectSkills}</p>
+
+
                                     </div>
-                                    <div className="panel-body text-left">
-                                        <p><strong>Description: </strong>{this.state.userdata.projectDescription}</p>
-                                        <p><strong>Skills: </strong> {this.state.userdata.projectSkills}</p>
-                                        <p><strong>Budget: </strong> {this.state.userdata.projectBudget}</p>
-                                        <p><strong>Project Id: </strong> {this.state.userdata.projectId}</p>
+                                    <div className="project-sidebar col-sm-4 padding-r10">
+                                        <div className="padding-r10 padding-l10 padding-t20">
+
+                                        </div>
                                     </div>
+
+                                </div>
+                                <div className="panel-body text-left projectBrief-inner">
+                                    <div className="project-brief margin-b5 col-sm-10">
+                                        <a href="postproject" className="btn-large btn-primary"> Post a Project like this </a>
+                                    </div>
+                                    <div className="block align-right padding-r10 right">
+                                        <div className="ProjectReport">
+                                            <span>Project Id:</span>
+                                            <span> {this.state.userdata.projectId}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+
+                                </div>
+                                <div className="panel-footer">
+                                    <div id="collapse1" className="panel-collapse collapse">
+                                        <div className="panel-body">
+                                            <span>Bid Amount (in USD):</span> &nbsp; &nbsp;
+                                            <input type="number" placeholder="120" value={this.state.userdata.bidamount}
+                                                   maxLength={5}
+                                                   onChange={(event) => {
+                                                       this.setState({
+                                                           userdata: {
+                                                               ...this.state.userdata,
+                                                               bidamount: event.target.value
+                                                           }
+                                                       });
+                                                   }}/>
+
+                                            <span> &nbsp;&nbsp; Duration (in days):</span> &nbsp; &nbsp;
+                                            <input type="number" placeholder="15" value={this.state.userdata.duration}
+                                                   maxLength={8}
+                                                   onChange={(event) => {
+                                                       this.setState({
+                                                           userdata: {
+                                                               ...this.state.userdata,
+                                                               duration: event.target.value
+                                                           }
+                                                       });
+                                                   }}/>
+                                            {/*<input type="number" placeholder="15" value={this.state.userdata.projectId}*/}
+                                            {/*maxLength={8}/>*/}
+                                            <br/> <br/>
+                                            <Button bsStyle="success" bsSize="sm" onClick={() => this.handleSubmit()}>Submit Bid </Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+
+
+                        {this.state.userdata.projectName!= undefined &&
+
+                        <div className="col-sm-12">
+                            <div className="panel panel-default text-center">
+
                             </div>
                             <div>
 
