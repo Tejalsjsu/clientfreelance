@@ -93,15 +93,15 @@ class financialDashboard extends Component {
                             <div className="PagePayments-summary">
                                 <div className="PagePayments-summary-header">
                                     <div className="Payment-label padding-t10 padding-r10 text-blue"> Balance &nbsp;&nbsp;:</div>
-                                    <div className="Payment-label padding-t10 block align-c padding-l30 text-black"> $200</div>
+                                    <div className="Payment-label padding-t10 block align-c padding-l30 text-black"> $100 </div>
                                 </div>
                                 <div className="PagePayments-summary-header">
                                     <div className="Payment-label padding-t10 padding-r10 text-blue">Incoming :</div>
-                                    <div className="Payment-label padding-t10 block align-c padding-l30 text-black">$200</div>
+                                    <div className="Payment-label padding-t10 block align-c padding-l30 text-black"> $750 </div>
                                 </div>
                                 <div className="PagePayments-summary-header">
                                     <div className="Payment-label padding-t10 padding-r10 text-blue">Outgoing :</div>
-                                    <div className="Payment-label padding-t10 block align-c padding-l30 text-black">$200</div>
+                                    <div className="Payment-label padding-t10 block align-c padding-l30 text-black">$250</div>
                                 </div>
                                 <div className="PagePayments-summary-footer">Check detailed transaction history in the below table</div>
                             </div>
@@ -119,13 +119,12 @@ class financialDashboard extends Component {
                                 </div>
 
 
-                                <table className="PagePayments-summary-table">
 
                                     <PieChart radius={10} labels={true}
                                         slices={[
                                             {
                                                 color: '#2eb8ff',
-                                                value: 10
+                                                value: 500
                                             },
                                             {
                                                 color: '#214dff',
@@ -133,7 +132,6 @@ class financialDashboard extends Component {
                                             },
                                         ]}
                                     />
-                                </table>
 
                                 <div className="PagePayments-summary-footer">The Pie chart shows your incoming and outgoing cash flow.</div>
 
