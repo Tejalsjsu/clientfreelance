@@ -66,20 +66,20 @@ export const saveData = (details) =>
 
 
 
-export const logout = (payload) =>
-    fetch(`${api}/users/logout`,{
+export const logout = (userId) =>
+    fetch(`${api}/mongoCalls/logout`,{
         method: 'POST',
         headers:{
             ...headers,
             'Content-Type': 'application/json'
         },
         credentials: 'include',
-        body: JSON.stringify(payload)
+        body: JSON.stringify(userId)
     }).then((res) => res.json())
         .then((data) => {
             return data;
         }).catch(error=> {
-        console.log("This is error");
+        console.log("This is error" +error);
         return error;
     });
 
@@ -307,6 +307,42 @@ export const withdrawMoney = (userdata) =>
         },
         credentials: 'include',
         body: JSON.stringify(userdata)
+    }).then((res) => res.json())
+        .then((data) => {return data;})
+        .catch(error => {
+            console.log("This is error");
+            return error;
+        });
+
+
+export const getIncomingTransactions = () =>
+    fetch(`${api}/mongoCalls/getIncomingTransactions`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+    }).then((res) => res.json())
+        .then((data) => {
+            // console.log(data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in fetch credit transactions ");
+            return error;
+        });
+
+
+export const hireFreelancer = (projectdetails) =>
+    fetch(`${api}/mongoCalls/hireFreelancer`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(projectdetails)
     }).then((res) => res.json())
         .then((data) => {return data;})
         .catch(error => {

@@ -986,3 +986,11 @@ label.ProjectFilters-dd {
     font-size: 14px;
     margin-top: 12px;
 }
+
+.transaction-table-comments{
+    width: 40%;
+}
+
+.transaction-table-amount{
+    width: 20%;
+}

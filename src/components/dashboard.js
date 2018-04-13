@@ -29,6 +29,7 @@ class Dashboard extends Component {
     };
 
     componentWillMount(){
+        console.log("Cookie when load "+cookie.load('userId'));
         if(cookie.load('userId') != undefined){
            // this.props.history.push('/dashboard');
             // Fetch all projects
@@ -53,8 +54,8 @@ class Dashboard extends Component {
                 });
             // fetch all project ends here
         }
-        // else{
-        //     console.log("in else "+cookie.load('userId'));
+         else{
+            console.log("in else "+cookie.load('userId'));
         //     API.checkSession()
         //         .then((res) => {
         //             console.log("status " +res.status);
@@ -68,8 +69,8 @@ class Dashboard extends Component {
         //                     isLoggedIn: false,
         //                     message: "Signup. Try again..!!",
         //                 });
-        //                 this.props.history.push('/login');
-        //             }
+                         this.props.history.push('/login');
+                     }
         //         });
         // }
         this.setState({
@@ -131,10 +132,10 @@ class Dashboard extends Component {
                             {this.state.projectData.details[pd]._id.skills && this.state.projectData.details[pd]._id.skills.split(',').map((skill) => <a href="#" className='a-skills'>{skill},</a>)}
                         </div>
                     </td>
-                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd].count}> {this.state.projectData.details[pd].count}</td>
-                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd].average}> {this.state.projectData.details[pd].average}</td>
-                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd]._id.postProjectDate}> {(new Date(this.state.projectData.details[pd]._id.postProjectDate).toLocaleDateString())}</td>
-                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd]._id.budgetRange}> {this.state.projectData.details[pd]._id.budgetRange}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd].count+pd}> {this.state.projectData.details[pd].count}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd].average+pd}> {this.state.projectData.details[pd].average}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd]._id.postProjectDate+pd}> {(new Date(this.state.projectData.details[pd]._id.postProjectDate).toLocaleDateString())}</td>
+                    <td className='ProjectTable-cell' key={this.state.projectData.details[pd]._id.budgetRange+pd}> {this.state.projectData.details[pd]._id.budgetRange}</td>
                 </tr>
             )
         }))
