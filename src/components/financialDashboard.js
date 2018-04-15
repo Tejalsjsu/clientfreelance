@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {NavLink, withRouter, Route} from 'react-router-dom';
 import cookie from "react-cookies";
 import * as API from "../api";
-import PieChart from 'react-simple-pie-chart';
+//import PieChart from 'react-simple-pie-chart';
 
 var FinancialNavBar = require('../components/financialNavBar');
 
@@ -120,18 +120,18 @@ class financialDashboard extends Component {
 
 
 
-                                    <PieChart radius={10} labels={true}
-                                        slices={[
-                                            {
-                                                color: '#2eb8ff',
-                                                value: 500
-                                            },
-                                            {
-                                                color: '#214dff',
-                                                value: 20,
-                                            },
-                                        ]}
-                                    />
+//                                     <PieChart radius={10} labels={true}
+//                                         slices={[
+//                                             {
+//                                                 color: '#2eb8ff',
+//                                                 value: 500
+//                                             },
+//                                             {
+//                                                 color: '#214dff',
+//                                                 value: 20,
+//                                             },
+//                                         ]}
+//                                     />
 
                                 <div className="PagePayments-summary-footer">The Pie chart shows your incoming and outgoing cash flow.</div>
 
