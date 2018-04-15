@@ -32,7 +32,6 @@ class ActiveBidsFreelancer extends Component {
     };
 
     componentWillMount(){
-        localStorage.setItem('Project', '');
         API.fetchProjects(this.state.userId)
             .then((res) => {
                 //console.log("status " +[res.details.json]);
@@ -91,23 +90,10 @@ class ActiveBidsFreelancer extends Component {
                 <tr key={item.idtblProject} onClick={self.handleClick} className="odd ProjectTable-row project-details">
                     {/*changed coloumn names as per mongo db column names*/}
                     <td className='ProjectTable-cell '><a href={`/myprojectdetails?projectid=${item._id}`}>{item.projectName}</a></td>
-                    <td className='ProjectTable-cell'>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
+                    <td className='ProjectTable-cell'>{item.Bids}</td>
+                    <td className='ProjectTable-cell'>{item.bidAwarded}</td>
+                    <td className='ProjectTable-cell'>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
                     <td className='ProjectTable-cell'>{item.budgetRange}</td>
-                    <td className='ProjectTable-cell'>
-                        <select id="ddlactions" className="input-sm"
-                                onChange={(event) => {
-                                    this.setState({
-                                        actions: event.target.value
-                                    });
-                                }} >
-                            <option value="Select" >Select</option>
-                            <option value="Extend" >Extend</option>
-                            <option value="CLose" >Close</option>
-                            <option value="Delete" >Delete</option>
-                        </select> &nbsp; &nbsp;
-                    </td>
-
-
                 </tr>
             )
         }))
@@ -167,9 +153,8 @@ class ActiveBidsFreelancer extends Component {
                                         <th className='ProjectTable-header'>PROJECT NAME</th>
                                         <th className='ProjectTable-header'>BIDS</th>
                                         <th className='ProjectTable-header'>MY BID</th>
-                                        <th className='ProjectTable-header'>AVG BID</th>
                                         <th className='ProjectTable-header'>BID END DATE</th>
-                                        <th className='ProjectTable-header'>ACTION</th>
+                                        <th className='ProjectTable-header'>PROJECT BUDGET</th>
                                     </tr>
 
                                     </thead>
@@ -179,7 +164,7 @@ class ActiveBidsFreelancer extends Component {
 
                                     </tbody>
                                 </table>
-
+<br/><br/><br/><br/><br/><br/><br/><br/>
                                 {/*Container ends here */}
                             </div>
                         </div>

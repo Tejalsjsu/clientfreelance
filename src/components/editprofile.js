@@ -37,6 +37,7 @@ class EditProfile extends Component{
             skills:'',
             phone: ''
         },
+        validation_error: [],
         isLoggedIn: false,
         isEditing: false,
         message: ''
@@ -48,6 +49,25 @@ class EditProfile extends Component{
 
     handleSubmit = () => {
         console.log(this.state.userdata);
+
+        //Validations
+        let email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        let noAlphabets=/[0-9]/g;
+        let errors =[];
+
+        if(this.state.userdata.proffesionHeading.length === 0){
+            errors.push("Kindly enter Professional Heading");
+        }
+
+        if(this.state.userdata.phone.length === 0){
+            errors.push("Kindly enter Phone number");
+        }else if(!noAlphabets.test(this.state.userdata.phone)){
+            errors.push("Invalid Phone Number");
+        }else if(this.state.userdata.phone.length < 10 || this.state.userdata.phone.length > 10 ){
+            errors.push("Phone Number should be of 10 digits");
+        }
+
+        if(errors.length === 0){
         API.editUpdateProfile(this.state.userdata)
             .then((res) => {
                 console.log(res.status);
@@ -65,6 +85,11 @@ class EditProfile extends Component{
                     this.props.history.push('/editprofile');
                 }
             });
+        } else{
+            this.setState ({
+                validation_error: errors
+            })
+        }
     };
 
     componentWillMount(){
@@ -76,11 +101,11 @@ class EditProfile extends Component{
                         isLoggedIn: true,
                         userdata:
                             {
-                        name: res.details[0].userName,
+                        name: res.details[0].username,
                         proffesionHeading: res.details[0].professionalHeading,
                         skills: res.details[0].skills,
                         Description: res.details[0].aboutUser,
-                        phone:res.details[0].userPhone
+                        phone:res.details[0].Phone
                         }
                     });
                     console.log("state " +this.state.name);
@@ -101,10 +126,20 @@ class EditProfile extends Component{
     render(){
         return(
             <div>
+
                 <NavBar/>
                 <Route exact path="/editprofile" render={() => (
                     <div>
                         <div className="container" >
+                            <div >
+                                {/*<div className="col-md-3">*/}
+                                {this.state.validation_error && (
+                                    <div>
+                                        {this.state.validation_error.map((item,index)=><div key={index} className="alert alert-danger" role="alert">{item}</div>)}
+                                    </div>
+                                )}
+                                {/*</div>*/}
+                            </div>
                             <div >
                                 {/*<div className="col-md-3">*/}
                                 {this.state.message && (
@@ -121,8 +156,12 @@ class EditProfile extends Component{
                                     </div>
 
                                 </div> <br/>
-                                <div className="text-left padding">
-                                    <span> Member since </span>
+                                <div className="text-left padding media-heading">
+                                    <span> <h4 className="media-heading">Member since : 02/12/2018 </h4></span> <br/>
+                                    <span> <h4 className="media-heading"> Profile last updated : 04/14/2018</h4> </span><br/>
+                                    <span> <h4 className="media-heading">Projects Posted : 5 </h4></span><br/>
+                                    <span> <h4 className="media-heading">No of Bids : 8 </h4></span><br/>
+
                                 </div>
                             </div>
                             <div className="col-sm-6">
@@ -199,7 +238,7 @@ class EditProfile extends Component{
                                 <div id="collapse2" className="panel-collapse collapse">
                                     <div className="panel-body text-left">
                                         <span>Phone:</span> &nbsp; &nbsp;
-                                        <input type="number" placeholder="e.g. 1234567895" value={this.state.userdata.phone} list="skills"
+                                        <input type="text" value={this.state.userdata.phone} list="skills"
                                                maxLength={10}
                                                onChange={(event) => {
                                                    this.setState({

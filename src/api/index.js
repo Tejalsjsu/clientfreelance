@@ -118,7 +118,8 @@ export const fetchData = (payload) =>
 
 
 export const postProject = (projectdetails) =>
-    fetch(`${api}/kafka/kafkaProducer/postproject`, {
+   // fetch(`${api}/kafka/kafkaProducer/postproject`, {
+    fetch(`${api}/mongoCalls/postproject`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -154,8 +155,30 @@ export const fetchProjects = () =>
         });
 
 
+export const fetchProjectsWithStatus = (status) =>
+    fetch(`${api}/mongoCalls/getProjectsByUserWithStatus`, {
+        method: 'POST',
+        headers: {
+            ...headers,
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(status)
+    }).then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            return data
+                ;})
+        .catch(error => {
+            console.log("This is error in fetch projects with status");
+            return error;
+        });
+
+
+
 export const editUpdateProfile = (userdata) =>
-    fetch(`${api}/users/editUpdateProfile`, {
+    //fetch(`${api}/users/editUpdateProfile`, {
+    fetch(`${api}/kafka/kafkaProducer/editUpdateProfile`, {
         method: 'POST',
         headers: {
             ...headers,
@@ -172,7 +195,8 @@ export const editUpdateProfile = (userdata) =>
 
 
 export const fetchUserProfile = () =>
-    fetch(`${api}/users/getUserProfile`, {
+    //fetch(`${api}/users/getUserProfile`, {
+    fetch(`${api}/kafka/kafkaProducer/getUserProfile`, {
         method: 'POST',
         headers: {
             ...headers,

@@ -59,16 +59,17 @@ function Nav(){
 
 
             <ul className="nav navbar-nav navbar-right">
+                {/*<li><NavLink to="./login">Login</NavLink></li>*/}
                 <li className="dropdown">
                     <a className="dropdown-toggle" data-toggle="dropdown" href="#"> $10.23 USD &nbsp;
                         <span className="glyphicon glyphicon-triangle-bottom"></span>
                     </a>
                     <ul className="dropdown-menu list-group">
-                        <li> <img alt="freelance.com" src={balanceimg} /> <br/></li>
+                       <li> <img alt="freelance.com" src={balanceimg} /> <br/></li>
                         <li><NavLink to="./financialDashboard"> Financial Dashboard  </NavLink> <br/></li>
                         <li><NavLink to="./addMoney"> Add Money </NavLink> <br/></li>
                         <li><NavLink to="./withdrawMoney"> Withdraw Money </NavLink> <br/></li>
-                    </ul>
+                </ul>
                 </li>
 
                 {/*<li><NavLink to="/signup"> <span className="glyphicon glyphicon-user"> </span> Sign Up</NavLink></li>*/}

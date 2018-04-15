@@ -31,14 +31,14 @@ class PastWorkFreelancer extends Component {
     };
 
     componentWillMount(){
-        localStorage.setItem('Project', '');
         API.fetchProjects(this.state.userId)
             .then((res) => {
                 //console.log("status " +[res.details.json]);
                 if (res.status === '201') {
                     this.setState({
                         isLoggedIn: true,
-                        projectData: res.details
+                        projectData: res.details,
+                        message: "No projects have been ended Yet..!!"
                     });
                     data = res.details;
                     console.log("state " +this.state.projectData[0].projectName);
@@ -118,11 +118,12 @@ class PastWorkFreelancer extends Component {
                         <div className="container">
                             <div >
                                 {/*<div className="col-md-3">*/}
-                                {this.state.message && (
+
                                     <div className="alert alert-warning" role="alert">
+                                        "No projects have been ended Yet..!!"
                                         {this.state.message}
                                     </div>
-                                )}
+
                                 {/*</div>*/}
                             </div>
                             <div className="container-fluid">
@@ -136,7 +137,7 @@ class PastWorkFreelancer extends Component {
 
 
                             <div className="text-left">
-                                <h1> Projects posted by me   </h1>
+                                <h1> Projects Completed   </h1>
                                 <br/>
                                 <div className="dashboard_tab_wrapper">
                                     <div className="dashboard_tab"><NavLink to="/ActiveBidsFreelancer">Active Bids</NavLink></div>
@@ -177,7 +178,7 @@ class PastWorkFreelancer extends Component {
                                     {withKeys}
 
                                     </tbody>
-                                </table>
+                                </table><br/><br/><br/><br/><br/><br/><br/><br/>
 
                                 {/*Container ends here */}
                             </div>

@@ -90,23 +90,9 @@ class PastProjectEmployee extends Component {
                 <tr key={item.idtblProject} onClick={self.handleClick} className="odd ProjectTable-row project-details">
                     {/*changed coloumn names as per mongo db column names*/}
                     <td className='ProjectTable-cell '><a href={`/myprojectdetails?projectid=${item._id}`}>{item.projectName}</a></td>
-                    <td className='ProjectTable-cell'>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
+                    <td className='ProjectTable-cell'>{item.bidAwarded}</td>
+                    <td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
                     <td className='ProjectTable-cell'>{item.budgetRange}</td>
-                    <td className='ProjectTable-cell'>
-                        <select id="ddlactions" className="input-sm"
-                                onChange={(event) => {
-                                    this.setState({
-                                        actions: event.target.value
-                                    });
-                                }} >
-                            <option value="Select" >Select</option>
-                            <option value="Extend" >Extend</option>
-                            <option value="CLose" >Close</option>
-                            <option value="Delete" >Delete</option>
-                        </select> &nbsp; &nbsp;
-                    </td>
-
-
                 </tr>
             )
         }))
@@ -139,9 +125,9 @@ class PastProjectEmployee extends Component {
                                 <h1> Projects   </h1>
                                 <br/>
                                 <div className="dashboard_tab_wrapper">
-                                    <div className="dashboard_tab tab-clicked"><NavLink to="#">Open Projects</NavLink></div>
+                                    <div className="dashboard_tab"><NavLink to="#">Open Projects</NavLink></div>
                                     <div className="dashboard_tab"> <NavLink to="/WorkInProgressEmployee">Work in Progress</NavLink></div>
-                                    <div className="dashboard_tab"><NavLink to="/PastProjectEmployee">Past Work</NavLink> </div>
+                                    <div className="dashboard_tab tab-clicked"><NavLink to="/PastProjectEmployee">Past Work</NavLink> </div>
                                 </div>
                                 <div className="dashboardTable-setting container">
                                     <input type="text" className="dashboardTable-setting-search gaf-container" id="search_my_projects"
@@ -163,11 +149,9 @@ class PastProjectEmployee extends Component {
                                     <thead className='ProjectTable-head'>
                                     <tr>
                                         <th className='ProjectTable-header'>PROJECT NAME</th>
-                                        <th className='ProjectTable-header'>EMPLOYER</th>
                                         <th className='ProjectTable-header'>AWARDED BID</th>
                                         <th className='ProjectTable-header'>DEADLINE</th>
-                                        <th className='ProjectTable-header'>MILESTONE</th>
-                                        <th className='ProjectTable-header'>ACTION</th>
+                                        <th className='ProjectTable-header'>PROJECT BUDGET</th>
                                     </tr>
 
                                     </thead>

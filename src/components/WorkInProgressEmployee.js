@@ -27,11 +27,11 @@ class WorkInProgressEmployee extends Component {
         projectData: '',
         action:'',
         projectId:'',
-        actions:''
+        actions:'',
+        status: 'Hired'
     };
 
     componentWillMount(){
-        localStorage.setItem('Project', '');
         API.fetchProjects(this.state.userId)
             .then((res) => {
                 //console.log("status " +[res.details.json]);
@@ -90,8 +90,8 @@ class WorkInProgressEmployee extends Component {
                 <tr key={item.idtblProject} onClick={self.handleClick} className="odd ProjectTable-row project-details">
                     {/*changed coloumn names as per mongo db column names*/}
                     <td className='ProjectTable-cell '><a href={`/myprojectdetails?projectid=${item._id}`}>{item.projectName}</a></td>
-                    <td className='ProjectTable-cell'>{item.count}</td><td>{item.Bids}</td><td>{(new Date(item.postProjectDate)).toLocaleDateString()}</td>
-                    <td className='ProjectTable-cell'>{item.budgetRange}</td>
+                    <td className='ProjectTable-cell'>{item.bidAwarded}</td>
+                    <td>{(new Date(item.hireDate)).toLocaleDateString()}</td>
                     <td className='ProjectTable-cell'>
                         <select id="ddlactions" className="input-sm"
                                 onChange={(event) => {
@@ -113,7 +113,7 @@ class WorkInProgressEmployee extends Component {
         return(
             <div>
                 <NavBar/>
-                <Route exact path="/MyProjects" render={() => (
+                <Route exact path="/WorkInProgressEmployee" render={() => (
                     <div className="page">
                         <div className="container">
                             <div >
@@ -139,8 +139,8 @@ class WorkInProgressEmployee extends Component {
                                 <h1> Projects   </h1>
                                 <br/>
                                 <div className="dashboard_tab_wrapper">
-                                    <div className="dashboard_tab tab-clicked"><NavLink to="#">Open Projects</NavLink></div>
-                                    <div className="dashboard_tab"> <NavLink to="/WorkInProgressEmployee">Work in Progress</NavLink></div>
+                                    <div className="dashboard_tab"><NavLink to="#">Open Projects</NavLink></div>
+                                    <div className="dashboard_tab  tab-clicked"> <NavLink to="/WorkInProgressEmployee">Work in Progress</NavLink></div>
                                     <div className="dashboard_tab"><NavLink to="/PastProjectEmployee">Past Work</NavLink> </div>
                                 </div>
                                 <div className="dashboardTable-setting container">
@@ -163,10 +163,8 @@ class WorkInProgressEmployee extends Component {
                                     <thead className='ProjectTable-head'>
                                     <tr>
                                         <th className='ProjectTable-header'>PROJECT NAME</th>
-                                        <th className='ProjectTable-header'>EMPLOYER</th>
                                         <th className='ProjectTable-header'>AWARDED BID</th>
                                         <th className='ProjectTable-header'>DEADLINE</th>
-                                        <th className='ProjectTable-header'>MILESTONE</th>
                                         <th className='ProjectTable-header'>ACTION</th>
                                     </tr>
 
@@ -203,17 +201,17 @@ class WorkInProgressEmployee extends Component {
                     </div>
                 )}/>
 
-                <Route exact path="/WorkInProgressEmployee" render = {() => (
-
-                    <div>
-                        <WorkInProgressEmployee />
-                    </div>
-                )}/>
-
                 <Route exact path="/CurrentWorkAsFreelancer" render = {() => (
 
                     <div>
                         <CurrentWorkAsFreelancer />
+                    </div>
+                )}/>
+
+                <Route exact path="/PastProjectEmployee" render = {() => (
+
+                    <div>
+                        <PastProjectEmployee />
                     </div>
                 )}/>
 

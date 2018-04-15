@@ -45,9 +45,9 @@ function NavBar() {
                         <div className="collapse navbar-collapse bar-item" id="myNavbar">
                             <ul className="nav navbar-nav">
                                 <li onClick={this.activateClass} ><NavLink exact to="/dashboard">Dashboard</NavLink></li>
-                                <li onClick={this.activateClass} className='active is-active'><NavLink to="/myprojects">My Projects</NavLink></li>
+                                <li onClick={this.activateClass} ><NavLink to="/myprojects">My Projects</NavLink></li>
                                 <li onClick={this.activateClass}><a href="#">My Bids</a></li>
-                                <li onClick={this.activateClass}><a href="/editprofile">Edit Profile</a></li>
+                                <li onClick={this.activateClass}  className='active is-active'><a href="/editprofile">Edit Profile</a></li>
                             </ul>
 
                             <ul className="nav navbar-nav navbar-right">
